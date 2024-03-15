@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -36,5 +37,10 @@ public class OrderTraceHandler implements IOrderTraceHandler {
     @Override
     public List<OrderTraceResponseDto> getOrderTracesByOrderId(Long orderId) {
         return orderTraceResponseMapper.orderTraceListToOrderTraceResponseDtoList(orderTraceServicePort.getOrderTracesByIdOrder(orderId));
+    }
+    
+    @Override
+    public Duration getDurationByIdOrder(Long idOrder) {
+        return orderTraceServicePort.getDurationByIdOrder(idOrder);
     }
 }

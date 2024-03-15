@@ -4,6 +4,8 @@ import com.pragma.powerup_traceabilitymicroservice.domain.api.IOrderTraceService
 import com.pragma.powerup_traceabilitymicroservice.domain.model.OrderTrace;
 import com.pragma.powerup_traceabilitymicroservice.domain.spi.IOrderTracePersistencePort;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderTraceUseCase implements IOrderTraceServicePort {
@@ -42,5 +44,13 @@ public class OrderTraceUseCase implements IOrderTraceServicePort {
     @Override
     public List<OrderTrace> getOrderTracesByIdOrder(Long idOrder) {
         return orderTracePersistencePort.getOrderTracesByIdOrder(idOrder);
+    }
+    
+    @Override
+    public Duration getDurationByIdOrder(Long idOrder) {
+        List<OrderTrace> orderTraces = orderTracePersistencePort.getOrderTracesByIdOrder(idOrder);
+        LocalDateTime createdAt = orderTraces.get(0).getCreatedAt();
+        LocalDateTime updatedAt = orderTraces.get(orderTraces.size() - 1).getUpdatedAt();
+        return Duration.between(createdAt, updatedAt);
     }
 }

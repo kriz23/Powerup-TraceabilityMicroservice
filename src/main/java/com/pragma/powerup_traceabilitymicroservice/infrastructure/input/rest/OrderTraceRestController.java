@@ -43,7 +43,7 @@ public class OrderTraceRestController {
     }
     
     @Operation(summary = "Get order trace by order ID")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All categories returned", content =
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order trace returned", content =
     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation =
             OrderTraceResponseDto.class))))})
     @GetMapping("/orderTrace/{idOrder}")
@@ -51,4 +51,13 @@ public class OrderTraceRestController {
             @Parameter(description = "Order id") @PathVariable Long idOrder) {
         return ResponseEntity.ok(orderTraceHandler.getOrderTracesByOrderId(idOrder));
     }
+    
+    @Operation(summary = "Get order's duration by order ID")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order's duration returned", content =
+    @Content)})
+    @GetMapping("/orderTrace/duration/{idOrder}")
+    public ResponseEntity<String> getDurationByIdOrder(@Parameter(description = "Order id") @PathVariable Long idOrder){
+        return ResponseEntity.ok(orderTraceHandler.getDurationByIdOrder(idOrder).toString());
+    }
+    
 }
